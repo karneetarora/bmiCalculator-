@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     EditText weightText, heightText;
     int weight, height = 0;
     static double BMI;
-    String textBMI;
+    String textBMI, optionSelected;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
             weightText.setText(savedInstanceState.getString("savedWeight"));
             heightText.setText(savedInstanceState.getString("savedHeight"));
             textView.setText(savedInstanceState.getString("savedBMI"));
+            //optionSelected = savedInstanceState.getString("radioPicked", optionSelected);
+
         }
-    else {
+         else {
             setContentView(R.layout.activity_main);
             textView = findViewById(R.id.textViewBMI);
             rg = findViewById(R.id.radioGroup);
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             weightText = findViewById(R.id.textWeight);
             heightText = findViewById(R.id.textHeight);
 
-        }
+         }
     }
 
     /**
@@ -52,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
         if(R.id.rbEnglish == rb.getId()){
             weightText.setHint("Enter weight in pounds");
             heightText.setHint("Enter height in inches");
+            optionSelected = "English";
         }else{
             weightText.setHint("Enter weight in kilograms");
             heightText.setHint("Enter height in meters");
+            optionSelected = "Metric";
 
         }
 
@@ -66,32 +72,32 @@ public class MainActivity extends AppCompatActivity {
      */
     public void showBMI(View view) {
         String msg;
-        
+
         String weightString = "" + weightText.getText().toString();
         weightString = weightString.replaceFirst("^0+(?!$)", "");
 
         String heightString = "" + heightText.getText().toString();
         heightString = heightString.replaceFirst("^0+(?!$)", "");
 
-        if((weightString.equals("") || weightString.equals("0"))  &&
-                ( heightString.equals("") ||  heightString.equals("0") ) ){
+        if((weightString.equals("") || weightString.equals("0"))  && ( heightString.equals("") ||  heightString.equals("0") ) ){
             msg = "Please enter a weight and height";
             Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
-
-        }else if(weightString.equals("") || weightString.equals("0")){
+        }
+        else if(weightString.equals("") || weightString.equals("0")){
             msg = "Please enter a weight";
             Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
-
-        }else if(heightString.equals("") || heightString.equals("0") ){
+        }
+        else if(heightString.equals("") || heightString.equals("0") ){
             msg = "Please enter a height";
             Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG).show();
-        }else{
+        }
+        else{
             weight = Integer.valueOf(weightText.getText().toString());
             height = Integer.valueOf(heightText.getText().toString());
-            if (R.id.rbEnglish == rb.getId())
+           if (optionSelected.equals("English"))
                 BMI = (weight * 703) / (height * height);
-            else
-                BMI = (weight) / (height * height);
+           else if(optionSelected.equals("Metric"))
+               BMI = (weight) / (height * height);
             textBMI = (String.format("%.2f", BMI));
             textView.setText(textBMI);
         }
@@ -106,17 +112,28 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SecondActivity.class);
             intent.putExtra("passBMI", textBMI);
             startActivity(intent);
-            finish();
+
         }
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+        weightText.setText(savedInstanceState.getString("savedWeight"));
+        heightText.setText(savedInstanceState.getString("savedHeight"));
+        textView.setText(savedInstanceState.getString("savedBMI"));
+        // savedInstanceState.putString("radioPicked", optionSelected);
+
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
         savedInstanceState.putString("savedWeight", weightText.getText().toString());
         savedInstanceState.putString("savedHeight", heightText.getText().toString());
         savedInstanceState.putString("savedBMI", textBMI);
-        super.onSaveInstanceState(savedInstanceState);
     }
 
 }
