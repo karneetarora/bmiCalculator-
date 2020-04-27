@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         display = findViewById(R.id.textView3);
         imageView = findViewById(R.id.imageView);
@@ -42,4 +44,6 @@ public class SecondActivity extends AppCompatActivity {
             imageView.setImageResource(R.drawable.obese);
         }
     }
+
+
 }
