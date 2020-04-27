@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/**
         if (savedInstanceState != null) {
             weightText.setText(savedInstanceState.getString("savedWeight"));
             heightText.setText(savedInstanceState.getString("savedHeight"));
             textView.setText(savedInstanceState.getString("savedBMI"));
             //optionSelected = savedInstanceState.getString("radioPicked", optionSelected);
-
         }
          else {
+ */
             setContentView(R.layout.activity_main);
             textView = findViewById(R.id.textViewBMI);
             rg = findViewById(R.id.radioGroup);
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             heightText = findViewById(R.id.textHeight);
 
          }
-    }
+  //  }
 
     /**
      * Changes the hints to pounds/inches or kilograms/meters.
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+/**
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putString("savedHeight", heightText.getText().toString());
         savedInstanceState.putString("savedBMI", textBMI);
     }
+ */
 
 }
 
